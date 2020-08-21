@@ -7,7 +7,7 @@
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
     </head>
-    <body id="page-top">
+    <body id="page-top" class="{% block body_classes %}{% endblock %}">
         {% block body %}{% endblock %}
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
