@@ -16,6 +16,8 @@ class ProfileController extends AbstractController
     /**
      * @Route("/profile", name="profile")
      * @Template()
+     *
+     * @return array<string, mixed>
      */
     public function profile(Request $request, UserPasswordEncoderInterface $passwordEncoder): array
     {

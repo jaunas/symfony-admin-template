@@ -10,16 +10,20 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class LoginType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    /**
+     * @param FormBuilderInterface<string|FormBuilderInterface> $builder
+     * @param array<string, mixed> $options
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('email',EmailType::class, [
+            ->add('email', EmailType::class, [
                 'required' => true,
                 'attr' => [
                     'placeholder' => 'Enter Email Address...'
                 ]
             ])
-            ->add('password',PasswordType::class, [
+            ->add('password', PasswordType::class, [
                 'required' => true,
                 'attr' => [
                     'placeholder' => 'Password'
@@ -27,7 +31,7 @@ class LoginType extends AbstractType
             ]);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'csrf_token_id' => 'authenticate',

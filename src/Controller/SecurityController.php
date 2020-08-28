@@ -42,9 +42,8 @@ class SecurityController extends AbstractController
     /**
      * @Route("/logout", name="app_logout")
      */
-    public function logout()
+    public function logout(): void
     {
         // This method can be blank - it will be intercepted by the logout key on a firewall
-        return null;
     }
 }

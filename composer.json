@@ -42,14 +42,18 @@
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.3",
+        "php-parallel-lint/php-console-highlighter": "^0.5.0",
+        "php-parallel-lint/php-parallel-lint": "^1.2",
+        "phpstan/extension-installer": "^1.0",
+        "phpstan/phpstan": "^0.12.40",
+        "phpstan/phpstan-doctrine": "^0.12.19",
+        "phpstan/phpstan-symfony": "^0.12.7",
         "symfony/browser-kit": "^5.1",
         "symfony/css-selector": "^5.1",
         "symfony/debug-bundle": "^5.1",
         "symfony/maker-bundle": "^1.20",
-        "symfony/monolog-bundle": "^3.0",
         "symfony/phpunit-bridge": "^5.1",
         "symfony/stopwatch": "^5.1",
-        "symfony/twig-bundle": "^5.1",
         "symfony/var-dumper": "^5.1",
         "symfony/web-profiler-bundle": "^5.1"
     },
@@ -89,6 +93,25 @@
         ],
         "post-update-cmd": [
             "@auto-scripts"
+        ],
+        "fix:fixer": "php-cs-fixer fix src/",
+        "fix": [
+            "@fix:fixer"
+        ],
+        "test:syntax": "parallel-lint src/",
+        "test:lint": "php-cs-fixer fix --dry-run src/",
+        "phpstan:general": "phpstan analyse --level=0 src/",
+        "phpstan:tests": "phpstan analyse --level=8 src/",
+        "phpstan": [
+            "@php bin/console cache:warmup --env=dev",
+            "@php bin/console cache:warmup --env=test",
+            "@phpstan:general",
+            "@phpstan:tests"
+        ],
+        "test": [
+            "@test:syntax",
+            "@test:lint",
+            "@phpstan"
         ]
     },
     "conflict": {

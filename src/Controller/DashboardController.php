@@ -11,7 +11,9 @@ class DashboardController extends AbstractController
 
     /**
      * @Route("/", name="dashboard")
-     * @Template
+     * @Template()
+     *
+     * @return array<string, mixed>
      */
     public function dashboard(): array
     {
