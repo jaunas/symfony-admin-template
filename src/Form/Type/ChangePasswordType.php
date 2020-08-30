@@ -12,7 +12,7 @@ class ChangePasswordType extends AbstractType
 {
     /**
      * @param FormBuilderInterface<string|FormBuilderInterface> $builder
-     * @param array<string, mixed> $options
+     * @param array<string, mixed>                              $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -22,10 +22,10 @@ class ChangePasswordType extends AbstractType
                 'required' => true,
                 'first_options' => ['label' => 'Password'],
                 'second_options' => ['label' => 'Repeat Password'],
-                'invalid_message' => 'The password fields must match.'
+                'invalid_message' => 'The password fields must match.',
             ])
             ->add('submit', SubmitType::class, [
-                'label' => 'Change'
+                'label' => 'Change',
             ]);
     }
 }

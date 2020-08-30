@@ -12,7 +12,6 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class ProfileController extends AbstractController
 {
-
     /**
      * @Route("/profile", name="profile")
      * @Template()
@@ -37,7 +36,7 @@ class ProfileController extends AbstractController
         }
 
         return [
-            'changePasswordForm' => $changePasswordForm->createView()
+            'changePasswordForm' => $changePasswordForm->createView(),
         ];
     }
 }

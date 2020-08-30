@@ -12,7 +12,7 @@ class LoginType extends AbstractType
 {
     /**
      * @param FormBuilderInterface<string|FormBuilderInterface> $builder
-     * @param array<string, mixed> $options
+     * @param array<string, mixed>                              $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -20,14 +20,14 @@ class LoginType extends AbstractType
             ->add('email', EmailType::class, [
                 'required' => true,
                 'attr' => [
-                    'placeholder' => 'Enter Email Address...'
-                ]
+                    'placeholder' => 'Enter Email Address...',
+                ],
             ])
             ->add('password', PasswordType::class, [
                 'required' => true,
                 'attr' => [
-                    'placeholder' => 'Password'
-                ]
+                    'placeholder' => 'Password',
+                ],
             ]);
     }
 
