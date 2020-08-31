@@ -9,7 +9,7 @@ It is a Symfony 5 base for building apps. Frontend uses SB Admin 2.
 
 ## Testing
 
-So far there are only code style and code analysis tools. To run them execute following line:
+Code style, code analysis tools and PHPUnit tests. To run all of them execute following line:
 
 ```
 composer test
@@ -17,5 +17,5 @@ composer test
 
 ## TODO
 
-* Codeception tests
+* Finish integration tests
 * Registration form
