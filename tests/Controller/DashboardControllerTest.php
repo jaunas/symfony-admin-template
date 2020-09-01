@@ -14,16 +14,15 @@ class DashboardControllerTest extends AuthorizedWebTestCase
 
     public function testDashboard(): void
     {
-        $client = static::createClient();
         $userRepository = static::$container->get(UserRepository::class);
 
         $user = $userRepository->findOneByEmail('user@sat.com');
 
         $this->assertInstanceOf(UserInterface::class, $user);
-        $client->loginUser($user);
+        $this->client->loginUser($user);
 
-        $client->request('GET', '/');
-        $response = $client->getResponse();
+        $this->client->request('GET', '/');
+        $response = $this->client->getResponse();
 
         $this->assertTrue($response->isOk());
     }
