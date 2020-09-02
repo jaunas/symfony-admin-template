@@ -2,9 +2,6 @@
 
 namespace App\Tests\Controller;
 
-use App\Repository\UserRepository;
-use Symfony\Component\Security\Core\User\UserInterface;
-
 class DashboardControllerTest extends AuthorizedWebTestCase
 {
     protected function getURI(): string
@@ -14,11 +11,7 @@ class DashboardControllerTest extends AuthorizedWebTestCase
 
     public function testDashboard(): void
     {
-        $userRepository = static::$container->get(UserRepository::class);
-
-        $user = $userRepository->findOneByEmail('user@sat.com');
-
-        $this->assertInstanceOf(UserInterface::class, $user);
+        $user = $this->getUserByEmail(static::USER_EMAIL);
         $this->client->loginUser($user);
 
         $this->client->request('GET', '/');

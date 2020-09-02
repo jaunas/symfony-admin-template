@@ -102,7 +102,7 @@
             "@fix:fixer"
         ],
         "test:syntax": "parallel-lint src/",
-        "test:lint": "php-cs-fixer fix --dry-run",
+        "test:lint": "php-cs-fixer fix --dry-run --diff",
         "test:phpunit": "bin/phpunit",
         "phpstan:general": "phpstan analyse --level=0",
         "phpstan:tests": "phpstan analyse --level=8",
