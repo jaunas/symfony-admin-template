@@ -28,11 +28,10 @@ class ProfileController extends AbstractController
 
             /** @var User $user */
             $user = $this->getUser();
-            $user->setPassword($passwordEncoder->encodePassword($user, $password));
-
-            $manager = $this->getDoctrine()->getManager();
-            $manager->persist($user);
-            $manager->flush();
+            $this
+                ->getDoctrine()
+                ->getRepository(User::class)
+                ->upgradePassword($user, $passwordEncoder->encodePassword($user, $password));
         }
 
         return [

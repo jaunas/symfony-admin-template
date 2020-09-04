@@ -21,7 +21,7 @@ class SecurityControllerTest extends AuthorizedWebTestCase
         $form = $crawler->filter('form[name=login]')->form([
             'login' => [
                 'email' => static::USER_EMAIL,
-                'password' => 'user'
+                'password' => 'user',
             ],
         ]);
 
@@ -32,23 +32,85 @@ class SecurityControllerTest extends AuthorizedWebTestCase
         $this->assertTrue($this->client->getResponse()->isOk());
     }
 
-    public function testLoginFail(): void
+    public function testLoginRedirect(): void
     {
+        $this->client->request('GET', '/profile');
+        $this->assertTrue($this->client->getResponse()->isRedirect('/login'));
+        $this->client->followRedirect();
+
         $crawler = $this->client->request('GET', '/login');
         $this->assertTrue($this->client->getResponse()->isOk());
 
         $form = $crawler->filter('form[name=login]')->form([
             'login' => [
                 'email' => static::USER_EMAIL,
-                'password' => 'pass'
+                'password' => 'user',
             ],
         ]);
 
         $this->client->submit($form);
-        $this->assertFalse($this->client->getResponse()->isRedirect('/'));
+        $this->assertTrue($this->client->getResponse()->isRedirect('http://localhost/profile'));
+    }
+
+    /**
+     * @dataProvider loginInvalidCredentialsProvider
+     *
+     * @param array<string> $credentials
+     */
+    public function testLoginInvalidCredentials(array $credentials, string $errorMessage): void
+    {
+        $crawler = $this->client->request('GET', '/login');
+        $this->assertTrue($this->client->getResponse()->isOk());
+
+        $form = $crawler->filter('form[name=login]')->form(['login' => $credentials]);
+
+        $this->client->submit($form);
+        $this->assertTrue($this->client->getResponse()->isRedirect('/login'));
+        $this->client->followRedirect();
+
+        $this->assertSelectorTextContains('form[name=login]', $errorMessage);
 
         $this->client->request('GET', '/');
         $this->assertTrue($this->client->getResponse()->isRedirect('/login'));
+    }
+
+    /**
+     * @return array[]
+     */
+    public function loginInvalidCredentialsProvider(): array
+    {
+        return [
+            [
+                'credentials' => [
+                    'email' => static::USER_EMAIL,
+                    'password' => 'pass',
+                ],
+                'Invalid credentials.',
+            ],
+            [
+                'credentials' => [
+                    'email' => 'nonexisting.user@sat.com',
+                    'password' => 'pass',
+                ],
+                'Email could not be found.',
+            ],
+            [
+                'credentials' => [
+                    'email' => static::USER_EMAIL,
+                    'password' => 'user',
+                    'csrf_token' => 'invalid_token',
+                ],
+                'Invalid CSRF token.',
+            ],
+        ];
+    }
+
+    public function testAlreadyLoggedIn(): void
+    {
+        $this->client->loginUser($this->getUserByEmail(static::USER_EMAIL));
+        $this->client->request('GET', '/login');
+
+        $this->assertTrue($this->client->getResponse()->isRedirect('/'));
     }
 
     public function testLogout(): void
