@@ -48,7 +48,7 @@ class ProfileController extends AbstractController
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {
         if ($this->getUser()) {
-            $this->redirectToRoute('dashboard');
+            return $this->redirectToRoute('dashboard');
         }
 
         $registerForm = $this->createForm(RegisterType::class);

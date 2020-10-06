@@ -26,12 +26,16 @@
                                     {{ form_errors(form) }}
                                     <div class="form-group">
                                         {{ form_widget(form.email, { attr: { class: 'form-control-user' } }) }}
+                                        {{ form_errors(form.email) }}
                                     </div>
                                     <div class="form-group">
                                         {{ form_widget(form.password.first, { attr: { class: 'form-control-user' } }) }}
+                                        {{ form_errors(form.password) }}
+                                        {{ form_errors(form.password.first) }}
                                     </div>
                                     <div class="form-group">
                                         {{ form_widget(form.password.second, { attr: { class: 'form-control-user' } }) }}
+                                        {{ form_errors(form.password.second) }}
                                     </div>
                                     {{ form_widget(form.submit, { attr: { class: 'btn btn-primary btn-user btn-block' } }) }}
                                     {{ form_end(form) }}
