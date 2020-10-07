@@ -16,6 +16,3 @@ composer test
 ```
 
 ## TODO
-
-* Finish integration tests
-* Registration form
